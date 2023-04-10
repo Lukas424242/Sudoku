@@ -190,6 +190,7 @@ public class SudokuV22 {
             }
         }
 
+
         // unten
         for (int i = 0; i < 9; i++) {
 
