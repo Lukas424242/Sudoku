@@ -5,30 +5,22 @@ public class SudokuV22 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[][] feldLeer = {{0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
         int[][] sudoku8 = {
-            {0, 0, 4, 6, 7, 0, 9, 1, 0},
-            {6, 0, 2, 1, 0, 5, 3, 0, 0},
-            {0, 0, 8, 3, 4, 0, 5, 6, 7},
-            {8, 5, 9, 7, 0, 1, 4, 2, 3},
-            {4, 2, 6, 8, 5, 3, 7, 9, 1},
-            {7, 1, 3, 9, 2, 4, 8, 5, 6},
+            {0, 0, 0, 6, 7, 0, 9, 1, 0},
+            {0, 0, 0, 1, 0, 5, 3, 0, 0},
+            {0, 0, 0, 3, 4, 0, 5, 6, 7},
+            {0, 0, 0, 7, 0, 1, 4, 2, 3},
+            {0, 0, 0, 8, 5, 3, 7, 9, 1},
+            {0, 0, 0, 9, 2, 4, 8, 5, 6},
             {9, 6, 0, 5, 3, 7, 2, 8, 4},
             {2, 8, 7, 4, 0, 9, 6, 3, 5},
             {3, 4, 5, 2, 8, 6, 1, 0, 0}
         };
-
-        solve(feldLeer);
-    }
+        
+        
+        solve(sudoku8);
+        }
 
     public static void print(int[][] b) {
         System.out.println("* Feld Anfang *");
@@ -148,52 +140,73 @@ public class SudokuV22 {
         return true;
     }
 
-    public static boolean blockTeilValid(int[][] feld, int feldX, int feldY) {
-        // Beispiel Koordinate
-        //x 5 und y 3
-        // wenn b %3==0, dann zwei zurück
+    public static boolean blockTeilValid2(int[][] feld, int feldX, int feldY) {
+        int[] üfeld = new int[9];
 
-        int feldx2 = feldX;
-        int feldy2 = feldY;
-        
-        int[] c = new int[9];
-        for (int y = 0; y < 3; y++) {
-            for (int x = 0; x < 3;) {
-                
-                if (feld[feldy2][feldx2] == 0) {
-                    return false;
-                }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int d = feld[feldY + i][feldX + j];
+                if (d != 0) {
+                    d = d - 1;
 
-                int d = feld[feldy2][feldx2] - 1;
+                    üfeld[d]++;
 
-                c[d]++;
-                if (c[d] > 1) {
-                    return false;
+                    if (üfeld[d] > 1) {
+                        return false;
+                    }
+
                 }
 
             }
-        }
 
+        }
+        return true;
+    }
+
+    public static boolean blockTeilValidcomp(int[][] feld) {
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!blockTeilValid2(feld, x, y)) {
+                    return false;
+                }
+                x = x + 3;
+
+            }
+            y = y + 3;
+            x = 0;
+
+        }
+        return true;
     }
 
     public static void rek2(int[][] feld, boolean[][] boolfeld, int feldX, int feldY) {
         int x1 = feldX;
         int y1 = feldY;
+        
+        
 
-        if (feldValid(feld)) {
-            System.out.println("Lösung gefunden");
+        //System.out.println(feldX);
+        if (feldValid(feld) && blockTeilValidcomp(feld)) {
+            // Blöcke prüfen
+
             print(feld);
-
             System.exit(0);
+            System.out.println("Lösung gefunden");
 
             // zweite Methode, die anhand der Koordinaten das 3*3 Feld bestimmen,
             // und bei falsch terminaten
+            // Logisch oder
+        } else if (feldX % 3 == 0 && feldY % 3 == 0) {
+            if (!blockTeilValid2(feld, feldX, feldY)) {
+                return;
+            }
+
         } else if (!feldTeilValid(feld, feldX, feldY)) {
             return;
         }
-
-        print(feld);
-
+        //print(feld);
         // Feld ist `teilvalid`...
         // 
         if (boolfeld[y1][x1]) {
