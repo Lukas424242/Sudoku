@@ -5,24 +5,12 @@ public class SudokuV22 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-        int[][] sudoku8 = {
-            {0, 0, 0, 6, 7, 0, 9, 1, 0},
-            {0, 0, 0, 1, 0, 5, 3, 0, 0},
-            {0, 0, 0, 3, 4, 0, 5, 6, 7},
-            {0, 0, 0, 7, 0, 1, 4, 2, 3},
-            {0, 0, 0, 8, 5, 3, 7, 9, 1},
-            {0, 0, 0, 9, 2, 4, 8, 5, 6},
-            {9, 6, 0, 5, 3, 7, 2, 8, 4},
-            {2, 8, 7, 4, 0, 9, 6, 3, 5},
-            {3, 4, 5, 2, 8, 6, 1, 0, 0}
-        };
         
-        
-        solve(sudoku8);
-        }
 
-    public static void print(int[][] b) {
+        solve(sudoku9);
+    }
+
+   public static void print(int[][] b) {
         System.out.println("* Feld Anfang *");
 
         for (int y = 0; y < 9; y++) {
