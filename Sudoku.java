@@ -17,6 +17,7 @@ public class SudokuV22 {
                 System.out.print(b[y][x] + (x % 3 == 2 ? "  " : " "));
             }
 
+
             if (y == 8) {
                 System.out.print("\n");
             } else {
