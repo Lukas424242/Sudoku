@@ -7,7 +7,6 @@ public class SudokuV22 {
     public static void main(String[] args) {
         
 
-        solve(sudoku9);
     }
 
    public static void print(int[][] b) {
